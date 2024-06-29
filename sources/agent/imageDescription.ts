@@ -20,7 +20,7 @@ export async function imageDescription(src: Uint8Array, model: KnownModel = 'moo
 export async function llamaFind(question: string, images: string): Promise<string> {
     return groqRequest(
              `
-                You are a smart AI that need to read through description of a images and answer user's questions.
+                You are an intelligent artificial intelligence that needs to read the description of an image (obtained from a microcamera that records the point of view of a dog) and answer questions from the user (the dog's owner).
 
                 This are the provided images:
                 ${images}
@@ -34,7 +34,7 @@ export async function llamaFind(question: string, images: string): Promise<strin
             question
     );
 }
-
+/*
 export async function openAIFind(question: string, images: string): Promise<string> {
     return gptRequest(
              `
@@ -52,3 +52,5 @@ export async function openAIFind(question: string, images: string): Promise<stri
             question
     );
 }
+
+*/

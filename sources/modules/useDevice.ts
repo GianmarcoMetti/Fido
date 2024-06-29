@@ -9,10 +9,9 @@ export function useDevice(): [BluetoothRemoteGATTServer | null, () => Promise<vo
     // Create callback
     const doConnect = React.useCallback(async () => {
         try {
-
             // Connect to device
             let connected = await navigator.bluetooth.requestDevice({
-                filters: [{ name: 'OpenGlass' }],
+                filters: [{ name: 'FidoCamera' }],
                 optionalServices: ['19B10000-E8F2-537E-4F6C-D104768A1214'.toLowerCase()],
             });
 
@@ -23,14 +22,19 @@ export function useDevice(): [BluetoothRemoteGATTServer | null, () => Promise<vo
             deviceRef.current = gatt;
             setDevice(gatt);
 
-            // Reset on disconnect (avoid loosing everything on disconnect)
+            // Reset on disconnect (avoid losing everything on disconnect)
             // connected.ongattserverdisconnected = () => {
             //     deviceRef.current = null;
             //     setDevice(null);
             // }
         } catch (e) {
             // Handle error
-            console.error(e);
+            const error = e as Error;
+            if (error.name === 'NotFoundError') {
+                console.log('User cancelled the requestDevice() chooser.');
+            } else {
+                console.error(error);
+            }
         }
     }, [device]);
 
